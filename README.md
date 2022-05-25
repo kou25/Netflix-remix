@@ -35,4 +35,4 @@ npm install
 npm run dev # or npm run dev:api && npm run dev:web if you'd like to run them independently
 ```
 
-This will start the [Remix](https://remix.run) development server. When the above command completes you'll be able to view your website at `http://localhost:3000`
+This will start the [Remix](https://remix.run) development server. When the above command completes you'll be able to view your website at `http://localhost:3000` or visit `https://netflix-remix.vercel.app/`
