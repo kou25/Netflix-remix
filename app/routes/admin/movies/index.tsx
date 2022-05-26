@@ -6,6 +6,7 @@ import requests from "../../../models/Request/Requests";
 import { Link, useLoaderData } from "@remix-run/react";
 import CategoryRows from "~/models/movies/ui/CategoryRows";
 import { debounce } from "lodash";
+import { json } from "@remix-run/node";
 
 export async function loader() {
   const res = await axios.get(requests.fetchOriginals);
@@ -14,16 +15,19 @@ export async function loader() {
   const fetchTopRated = await axios.get(requests.fetchTopRated);
   const fetchActionMovies = await axios.get(requests.fetchActionMovies);
   const fetchHorrorMovies = await axios.get(requests.fetchHorrorMovies);
-  return {
-    data: res.data.results[
-      Math.floor(Math.random() * res.data.results.length - 1)
-    ],
-    fetchTrending: fetchTrending.data.results,
-    fetchOriginals: fetchOriginals.data.results,
-    fetchTopRated: fetchTopRated.data.results,
-    fetchActionMovies: fetchActionMovies.data.results,
-    fetchHorrorMovies: fetchHorrorMovies.data.results
-  };
+  return json(
+    {
+      data: res.data.results[
+        Math.floor(Math.random() * res.data.results.length - 1)
+      ],
+      fetchTrending: fetchTrending.data.results,
+      fetchOriginals: fetchOriginals.data.results,
+      fetchTopRated: fetchTopRated.data.results,
+      fetchActionMovies: fetchActionMovies.data.results,
+      fetchHorrorMovies: fetchHorrorMovies.data.results
+    },
+    { headers: { "Cache-Control": "max-age=300, s-maxage=3600" } }
+  );
 }
 
 const MoviesList = () => {
